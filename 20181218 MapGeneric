@@ -1,0 +1,77 @@
+package test.map;
+
+import java.util.*;
+import practice2.Book;
+
+public class TestMapGeneric {
+
+	public static void main(String[] args) {
+		// Map 계열의 제네릭 기능 사용
+		HashMap<String, Book> hmap = getInstance();
+		//printMap(hmap);
+		//printMap2(hmap);
+		printMap3(hmap);
+		
+
+	}
+	
+	private static void printMap(HashMap<String, Book> hmap) {
+		// 첫번째, 키들을 Set으로 바꿈
+		Set<String> keys = hmap.keySet();
+		// 목록 만들기
+		Iterator<String> keyIter = keys.iterator();
+		while(keyIter.hasNext()) {
+			String key = keyIter.next(); //제너릭이 붙으면 object가 아니고 String으로 바로 바뀜
+			Book b = hmap.get(key);
+			System.out.println(key + " = " + b);
+		}
+		
+	}
+	
+	private static void printMap2(HashMap<String, Book> hmap) {
+		// 두번째, 값 객체들을 Collection으로 바꿈
+		Collection<Book> values = hmap.values();
+		// 목록 만들기
+		Iterator<Book> valueIter = values.iterator();
+		while(valueIter.hasNext()) {
+			Book b = valueIter.next();//제너릭이 붙으면 object가 아니고 Book으로 바로 바귐
+			System.out.println(b);
+		}
+		System.out.println("------------");
+		//배열로 바꾸기
+		Book[] bar = new Book[values.size()];
+		values.toArray(bar);
+		for(Book b : bar) {
+			System.out.print(b);
+		}
+		
+	}
+	
+	private static void printMap3(HashMap<String, Book> hmap) {
+		// 첫번째, 키와 값을 묶은 엔트리들을 Set으로 바꿈
+		Set<Map.Entry<String, Book>> entries = hmap.entrySet();
+		// 목록 만들기
+		Iterator<Map.Entry<String, Book>> entryIter = entries.iterator();
+		System.out.println("------------");
+		while(entryIter.hasNext()) {
+			Map.Entry<String, Book> entry = entryIter.next();
+			String key = entry.getKey();
+			Book b = entry.getValue();
+			System.out.println(key + " = " + b);
+		}
+		
+		//배열로 바꾸기
+		
+		
+	}
+
+	public static HashMap<String, Book> getInstance(){
+		HashMap<String, Book> hmap = new HashMap<String, Book>();
+		
+		hmap.put("12", new Book("12", 1, "자바정복", "홍길동"));
+		hmap.put("23", new Book("23", 2, "홍길동전", "허난설헌"));
+		hmap.put("37", new Book("37", 4, "취미생활", "호호"));
+		return hmap;
+	}
+
+}
