@@ -1,0 +1,67 @@
+package test.map;
+
+import java.util.*;
+
+public class TestHashMap2 {
+
+	public static void main(String[] args) {
+		// 맵에 저장된 객체정보 연속 처리
+		HashMap hmap = new HashMap();
+		
+		hmap.put("one", new Integer(12345));
+		hmap.put(2, "java"); //Auto Boxing
+		hmap.put("two", "oracle");
+		System.out.println(hmap);
+		
+		//Map 계열은 저장된 객체에 대한 연속 처리 기능 없음
+		//연속 처리하려면 Map을 Set이나 Collection으로 바꿔야 한다
+		//keySet(key만 Set으로 바꾼다, iterator로 key에 대한 목록을 바꾼다) or value(collection으로 바꿈)
+		//바꾸고 나서 Iterator()로 목록 만들거나 Object[]로 바꾸어 사용해야함
+
+		//1. key들을 Set으로 바꾸고 key에 대한 목록을 만듬
+		Set keys = hmap.keySet();
+		System.out.println(keys);
+		System.out.println("----------");
+		Iterator keyIter = keys.iterator();
+		while(keyIter.hasNext()) {
+			Object key = keyIter.next();
+			Object value = hmap.get(key);
+			System.out.println(key + " = " + value);
+		}
+		
+		
+		
+		//2. 값 객체들만 Collection으로 바꾸고 나서, 목록이나 객체 배열로 만듬
+		Collection values = hmap.values();
+		//(1) 목록 만들기
+		System.out.println("1 ----------");
+		Iterator valueIter = values.iterator();
+		while(valueIter.hasNext()) {
+			System.out.println(valueIter.next());
+		}
+		System.out.println("2 ----------");
+		
+		//(2) 객체 배열 만들기
+		Object[] valueArr = values.toArray();
+		for(Object o : valueArr) {
+			System.out.println(o);
+		}
+		
+		
+		
+		//(3) entrySet() 사용
+		//Map.Entry 들을 Set으로 바꾸고 엔트리에 대한 목록을 만듬
+		//Entry : 키와 값 한쌍
+		System.out.println("3 ----------");
+		
+		Set entries = hmap.entrySet();
+		Iterator entryIter = entries.iterator();
+		while(entryIter.hasNext()) {
+			Object obj = entryIter.next();
+			Map.Entry entry = (Map.Entry)obj;
+			System.out.println(entry.getKey() + "=" + entry.getValue());
+		}
+
+	}
+		
+}
